@@ -1,0 +1,24 @@
+package hdwallet
+
+import (
+	"fmt"
+	"testing"
+)
+
+func Test(t *testing.T) {
+	// 为了生成hd wallet而生成的一组容易记住的词
+	mnemonic := "tag volcano eight thank tide danger coast health above argue embrace heavy"
+	wallet, err := NewFromMnemonic(mnemonic)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	path := MustParseDerivationPath("m/1/0")
+	account, err := wallet.Derive(path, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fmt.Println(account.Address.Hex()) // 0xC49926C4124cEe1cbA0Ea94Ea31a6c12318df947
+
+}
